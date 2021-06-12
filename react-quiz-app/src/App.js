@@ -1,22 +1,23 @@
-import Button from './components/Button';
-import Quizlist from './components/Quizlist';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route  
+} from "react-router-dom";
+import Addquiz from "./components/Addquiz";
+import Home from "./components/Home";
 
 function App() {
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-12'>
-          <div className='d-flex justify-content-between align-items-center'>
-            <h2>Quiz</h2>
-            <Button name='New Quiz' color='btn btn-primary'/>
-          </div>
-        </div>
-        <div className='col-12'>
-          <h3>Quiz List</h3>
-            <Quizlist/>
-        </div>
-      </div>
-    </div>
+    <Router>       
+      <Switch>        
+        <Route path="/quiz">
+          <Addquiz />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
