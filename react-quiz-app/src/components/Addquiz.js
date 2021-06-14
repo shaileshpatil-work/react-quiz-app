@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { IconPicker } from 'react-fa-icon-picker';
-import Button from "./Button";
 
 const Addquiz = () => {
-    const [value, setValue] = useState("FaAdobe");
+    const [icon, setValue] = useState('FaAdobe');  
+    const [description, setData] = useState('');
+    const inputEl = useRef(null);
+    const quizInfo = ( ) => {
+        let quiz = {
+            quizmetaInfo: {
+                title: inputEl.current.value,
+                description, icon
+            }
+        };
+        localStorage.setItem('quiz', JSON.stringify(quiz));        
+    }    
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -21,7 +31,7 @@ const Addquiz = () => {
                         <form>
                             <div class="form-group mb-3">
                                 <label>Title</label>
-                                <input type="text" class="form-control"  placeholder="Enter Quiz Name" />
+                                <input ref={inputEl} type="text" class="form-control"  placeholder="Enter Quiz Name" />
                             </div>
                             <div class="form-group mb-3">
                                 <label>Description</label>
@@ -33,16 +43,16 @@ const Addquiz = () => {
                                         console.log('Editor is ready to use!', editor);
                                     }}
                                     onChange={(event, editor) => {
-                                        const data = editor.getData();
-                                        console.log({ event, editor, data });
+                                        const description = editor.getData();
+                                        setData(description);
                                     }}
                                 />
                             </div>
                             <div class="form-group mb-3">
                                 <label>Featured Image</label>
-                                <IconPicker value={value} onChange={(v) => setValue(v)} />
+                                <IconPicker value={icon} onChange={(v) => setValue(v)} />
                             </div>
-                            <Button name='Save and Continue' color='btn btn-primary' />
+                            <button className='btn btn-primary' type='button' onClick={quizInfo}>Save and Continue</button>
                         </form>    
                     </div>
                 </div>
