@@ -13,19 +13,22 @@ const Addquiz = () => {
             let quiz1 = {                
                 quizmetaInfo: {
                     title: inputEl.current.value,
-                        description, icon
+                    description, 
+                    icon,
+                    quizSubmitted: false
                 },
                 quizList: []
-            }
-            let quiz2 = [...quiz, quiz1];            
-            localStorage.setItem('quiz', JSON.stringify(quiz2));
+            }                     
+            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));
         }
        else {
             let quiz = [
                 {
                     quizmetaInfo: {
                         title: inputEl.current.value,
-                        description, icon
+                        description, 
+                        icon,
+                        quizSubmitted: false
                     },
                     quizList: []
                 }
@@ -44,7 +47,7 @@ const Addquiz = () => {
                     </div>
                 </div>
                 <div className='col-sm-8 offset-sm-4'>
-                    <div className='p-5'>
+                    <div className='full-height d-flex justify-content-center align-items-center'>
                         <form>
                             <div class="form-group mb-3">
                                 <label>Title</label>
