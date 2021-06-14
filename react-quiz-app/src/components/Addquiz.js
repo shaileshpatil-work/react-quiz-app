@@ -8,13 +8,30 @@ const Addquiz = () => {
     const [description, setData] = useState('');
     const inputEl = useRef(null);
     const quizInfo = ( ) => {
-        let quiz = {
-            quizmetaInfo: {
-                title: inputEl.current.value,
-                description, icon
+        if (localStorage.getItem('quiz')) {
+            let quiz = JSON.parse(localStorage.getItem('quiz'));            
+            let quiz1 = {                
+                quizmetaInfo: {
+                    title: inputEl.current.value,
+                        description, icon
+                },
+                quizList: []
             }
-        };
-        localStorage.setItem('quiz', JSON.stringify(quiz));        
+            let quiz2 = [...quiz, quiz1];            
+            localStorage.setItem('quiz', JSON.stringify(quiz2));
+        }
+       else {
+            let quiz = [
+                {
+                    quizmetaInfo: {
+                        title: inputEl.current.value,
+                        description, icon
+                    },
+                    quizList: []
+                }
+            ];
+            localStorage.setItem('quiz', JSON.stringify(quiz));
+       }      
     }    
     return (
         <div className='container-fluid'>
@@ -37,11 +54,7 @@ const Addquiz = () => {
                                 <label>Description</label>
                                 <CKEditor
                                     editor={ClassicEditor}
-                                    data="<p>Description</p>"
-                                    onReady={editor => {
-                                        // You can store the "editor" and use when it is needed.
-                                        console.log('Editor is ready to use!', editor);
-                                    }}
+                                    data="<p>Description</p>"                            
                                     onChange={(event, editor) => {
                                         const description = editor.getData();
                                         setData(description);
