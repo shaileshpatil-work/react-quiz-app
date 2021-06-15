@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState, useRef } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -8,35 +8,48 @@ const Addquiz = () => {
     const [icon, setValue] = useState('FaAdobe');  
     const [description, setData] = useState('');
     const inputEl = useRef(null);
+    const history = useHistory();    
     const quizInfo = ( ) => {
         if (localStorage.getItem('quiz')) {
             const title = inputEl.current.value;
-            let quiz = JSON.parse(localStorage.getItem('quiz'));            
+            let quiz = JSON.parse(localStorage.getItem('quiz')); 
+            let id = Math.floor(Math.random() * 100);
             let quiz1 = {                
                 quizmetaInfo: {
                     title,
                     description, 
                     icon,
-                    quizSubmitted: false
+                    quizSubmitted: false,
+                    id
                 },
                 quizList: []
             }           
-            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));            
+            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));
+            history.push({
+                pathname: '/addquestions',
+                state: quiz1
+            });
         }
        else {
             const title = inputEl.current.value;
+            let id = Math.floor(Math.random() * 100);
             let quiz = [
                 {
                     quizmetaInfo: {
                         title,
                         description, 
                         icon,
-                        quizSubmitted: false
+                        quizSubmitted: false,
+                        id
                     },
                     quizList: []
                 }
             ];
-            localStorage.setItem('quiz', JSON.stringify(quiz));            
+            localStorage.setItem('quiz', JSON.stringify(quiz));
+            history.push({
+                pathname: '/addquestions',
+                state: quiz
+            });
         }    
     }         
     return (

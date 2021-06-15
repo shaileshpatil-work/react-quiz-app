@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import Addquiz from "./components/Addquiz";
 import Home from "./components/Home";
+import AddQuestions from './components/AddQuestions';
 import NoMatch from './components/NoMatch';
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
         </Route>
         <Route path="/quiz">
           <Addquiz />
+        </Route>
+        <Route path="/addquestions">
+          <AddQuestions/>
         </Route>
         <Route path="*">
           <NoMatch />

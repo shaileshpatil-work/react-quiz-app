@@ -16,7 +16,7 @@ const Quizlist = () => {
             {
                 quizMetaArray.map((item) => {
                     return (
-                        <li key={item} className='row pb-2 border-bottom pt-2 align-items-center'>
+                        <li key={item.id} className='row pb-2 border-bottom pt-2 align-items-center'>
                             <span className='col-sm-1'><IconPickerItem icon={item.icon} size={24} color="#000" /></span>
                             <h4 className='col-sm-9 mb-0'>{item.title}</h4>
                             <div className='col-sm-2'>
