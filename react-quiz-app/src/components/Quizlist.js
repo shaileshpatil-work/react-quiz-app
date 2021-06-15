@@ -8,6 +8,8 @@ const Quizlist = () => {
         for(let i=0; i < quiz.length; i++){
             quizMetaArray.push(quiz[i].quizmetaInfo);
         }        
+    } else {
+        return <p>Zero Quiz Present</p>
     }
     return (
         <ol className='p-0'>

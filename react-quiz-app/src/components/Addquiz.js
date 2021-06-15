@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState, useRef } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -9,23 +10,25 @@ const Addquiz = () => {
     const inputEl = useRef(null);
     const quizInfo = ( ) => {
         if (localStorage.getItem('quiz')) {
+            const title = inputEl.current.value;
             let quiz = JSON.parse(localStorage.getItem('quiz'));            
             let quiz1 = {                
                 quizmetaInfo: {
-                    title: inputEl.current.value,
+                    title,
                     description, 
                     icon,
                     quizSubmitted: false
                 },
                 quizList: []
-            }                     
-            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));
+            }           
+            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));            
         }
        else {
+            const title = inputEl.current.value;
             let quiz = [
                 {
                     quizmetaInfo: {
-                        title: inputEl.current.value,
+                        title,
                         description, 
                         icon,
                         quizSubmitted: false
@@ -33,9 +36,9 @@ const Addquiz = () => {
                     quizList: []
                 }
             ];
-            localStorage.setItem('quiz', JSON.stringify(quiz));
-       }      
-    }    
+            localStorage.setItem('quiz', JSON.stringify(quiz));            
+        }    
+    }         
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -67,8 +70,11 @@ const Addquiz = () => {
                             <div class="form-group mb-3">
                                 <label>Featured Image</label>
                                 <IconPicker value={icon} onChange={(v) => setValue(v)} />
+                            </div>                            
+                            <div className="d-flex justify-content-between">
+                                <Link to='/'><button className='btn btn-primary'>Previous</button></Link>
+                                <button className='btn btn-primary' type='button' onClick={quizInfo}>Save and Continue</button>
                             </div>
-                            <button className='btn btn-primary' type='button' onClick={quizInfo}>Save and Continue</button>
                         </form>    
                     </div>
                 </div>
