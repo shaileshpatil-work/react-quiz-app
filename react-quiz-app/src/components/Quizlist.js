@@ -6,7 +6,7 @@ const Quizlist = () => {
     if (localStorage.getItem('quiz')) {
         let quiz = JSON.parse(localStorage.getItem('quiz'));
         for(let i=0; i < quiz.length; i++){
-            quizMetaArray.push(quiz[i].quizmetaInfo);
+            quizMetaArray.push(quiz[i].quizMetaInfo);
         }        
     } else {
         return <p>Zero Quiz Present</p>

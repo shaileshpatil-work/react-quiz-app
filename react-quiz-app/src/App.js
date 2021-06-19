@@ -18,7 +18,7 @@ function App() {
         <Route path="/quiz">
           <Addquiz />
         </Route>
-        <Route path="/addquestions">
+        <Route path="/add_questions">
           <AddQuestions/>
         </Route>
         <Route path="*">

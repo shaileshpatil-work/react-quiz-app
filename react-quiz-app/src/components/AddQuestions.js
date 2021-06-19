@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 const AddQuestions = () => {    
     let {state} = useLocation();
     if(Array.isArray(state)){
-        state = state[0].quizmetaInfo
+        state = state[0].quizMetaInfo
     } else {
-        state = state.quizmetaInfo
+        state = state.quizMetaInfo
     }
 
     const [btnState, setBtnState] = useState(true);  
@@ -27,7 +27,7 @@ const AddQuestions = () => {
 
         if (localStorage.getItem('quiz')) {
             let quiz = JSON.parse(localStorage.getItem('quiz'));
-            quizObject = quiz.find(x => x.quizmetaInfo.id === state.id);              
+            quizObject = quiz.find(x => x.quizMetaInfo.id === state.id);              
             let questionInfo = {
                 question,
                 questionOptions

@@ -8,34 +8,17 @@ const Addquiz = () => {
     const [icon, setValue] = useState('FaAdobe');  
     const [description, setData] = useState('');
     const inputEl = useRef(null);
+    const [error, showError] = useState(false);
     const history = useHistory();    
-    const quizInfo = ( ) => {
+    const quizInfo = (e) => {
+        e.preventDefault();
         if (localStorage.getItem('quiz')) {
             const title = inputEl.current.value;
             let quiz = JSON.parse(localStorage.getItem('quiz')); 
             let id = Math.floor(Math.random() * 100);
-            let quiz1 = {                
-                quizmetaInfo: {
-                    title,
-                    description, 
-                    icon,
-                    quizSubmitted: false,
-                    id
-                },
-                quizList: []
-            }           
-            localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));
-            history.push({
-                pathname: '/addquestions',
-                state: quiz1
-            });
-        }
-       else {
-            const title = inputEl.current.value;
-            let id = Math.floor(Math.random() * 100);
-            let quiz = [
-                {
-                    quizmetaInfo: {
+            if (title && id && icon && description) {
+                let quiz1 = {                
+                    quizMetaInfo: {
                         title,
                         description, 
                         icon,
@@ -43,13 +26,40 @@ const Addquiz = () => {
                         id
                     },
                     quizList: []
-                }
-            ];
-            localStorage.setItem('quiz', JSON.stringify(quiz));
-            history.push({
-                pathname: '/addquestions',
-                state: quiz
-            });
+                }           
+                localStorage.setItem('quiz', JSON.stringify([...quiz, quiz1]));
+                history.push({
+                    pathname: '/add_questions',
+                    state: quiz1
+                });
+            } else {
+                showError(true);
+            }
+        }
+       else {
+            const title = inputEl.current.value;
+            let id = Math.floor(Math.random() * 100);
+            if (title && id && icon && description) {
+                let quiz = [
+                    {
+                        quizMetaInfo: {
+                            title,
+                            description,
+                            icon,
+                            quizSubmitted: false,
+                            id
+                        },
+                        quizList: []
+                    }
+                ];
+                localStorage.setItem('quiz', JSON.stringify(quiz));
+                history.push({
+                    pathname: '/add_questions',
+                    state: quiz
+                });
+            } else {
+                showError(true);
+            }        
         }    
     }         
     return (
@@ -83,10 +93,11 @@ const Addquiz = () => {
                             <div class="form-group mb-3">
                                 <label>Featured Image</label>
                                 <IconPicker value={icon} onChange={(v) => setValue(v)} />
-                            </div>                            
+                            </div>   
+                            {error ? <p className='text-danger'>Please fill all fields</p> : ''}
                             <div className="d-flex justify-content-between">
                                 <Link to='/'><button className='btn btn-primary'>Previous</button></Link>
-                                <button className='btn btn-primary' type='button' onClick={quizInfo}>Save and Continue</button>
+                                <button className='btn btn-primary' onClick={(e) => quizInfo(e)}>Save and Continue</button>
                             </div>
                         </form>    
                     </div>
