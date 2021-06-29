@@ -5,11 +5,11 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { IconPicker } from 'react-fa-icon-picker';
 
 const Addquiz = () => {
-    const [icon, setValue] = useState('FaAdobe');  
     const inputEl = useRef(null);
     const [error, showError] = useState(false);
     const history = useHistory();
     let { state } = useLocation();
+    const [icon, setValue] = useState(state ? state.icon : 'FaAdobe');
     const [description, setData] = useState(state ? state.description : "<p>Description</p>");
     const [title, setTitle] = useState(state ? state.title : "Enter Quiz Title");
     const quizInfo = (e) => {
