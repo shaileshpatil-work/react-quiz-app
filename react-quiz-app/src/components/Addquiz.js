@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useState, useRef } from "react";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -6,14 +6,15 @@ import { IconPicker } from 'react-fa-icon-picker';
 
 const Addquiz = () => {
     const [icon, setValue] = useState('FaAdobe');  
-    const [description, setData] = useState('');
     const inputEl = useRef(null);
     const [error, showError] = useState(false);
-    const history = useHistory();    
+    const history = useHistory();
+    let { state } = useLocation();
+    const [description, setData] = useState(state ? state.description : "<p>Description</p>");
+    const [title, setTitle] = useState(state ? state.title : "Enter Quiz Title");
     const quizInfo = (e) => {
         e.preventDefault();
         if (localStorage.getItem('quiz')) {
-            const title = inputEl.current.value;
             let quiz = JSON.parse(localStorage.getItem('quiz')); 
             let id = Math.floor(Math.random() * 100);
             if (title && id && icon && description) {
@@ -37,7 +38,6 @@ const Addquiz = () => {
             }
         }
        else {
-            const title = inputEl.current.value;
             let id = Math.floor(Math.random() * 100);
             if (title && id && icon && description) {
                 let quiz = [
@@ -77,13 +77,13 @@ const Addquiz = () => {
                         <form>
                             <div class="form-group mb-3">
                                 <label>Title</label>
-                                <input ref={inputEl} type="text" class="form-control"  placeholder="Enter Quiz Name" />
+                                <input ref={inputEl} type="text" class="form-control" value={title} onChange={(e) => setTitle(e.target.value) }/>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Description</label>
                                 <CKEditor
                                     editor={ClassicEditor}
-                                    data="<p>Description</p>"                            
+                                    data={description}
                                     onChange={(event, editor) => {
                                         const description = editor.getData();
                                         setData(description);

@@ -1,9 +1,15 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useState, useRef } from "react";
-import { Link } from 'react-router-dom';
 
 const AddQuestions = () => {    
     let {state} = useLocation();
+    const history = useHistory();
+    const goPreviouScreen = () => {
+        history.push({
+            pathname: '/quiz',
+            state
+        });
+    }
     if(Array.isArray(state)){
         state = state[0].quizMetaInfo
     } else {
@@ -85,7 +91,7 @@ const AddQuestions = () => {
                     </div>
                 </div> 
                 <div className="d-flex justify-content-between fixed-bottom mb-2">
-                    <Link to='/quiz'><button className='btn btn-primary'>Previous</button></Link>
+                    <button className='btn btn-primary' onClick={goPreviouScreen}>Previous</button>
                     <button className='btn btn-primary' type='button' onClick={addQuizQuestions}>Save and Continue</button>
                 </div>
             </div>
